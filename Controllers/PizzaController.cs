@@ -25,7 +25,7 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 List<Pizza> listaPizze = context.Pizze.ToList();
 
-                return View(listaPizze);
+                return View("Menu", listaPizze);
             }
            
         }
@@ -38,7 +38,7 @@ namespace la_mia_pizzeria_static.Controllers
 
                 if(current == null)
                 {
-                    return NotFound();
+                    return NotFound("La pizza non esiste");
                 }
                 else
                 {
