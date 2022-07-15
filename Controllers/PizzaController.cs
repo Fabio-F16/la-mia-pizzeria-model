@@ -1,4 +1,5 @@
-﻿using la_mia_pizzeria_static.Models;
+﻿using la_mia_pizzeria_static.Database;
+using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -20,7 +21,30 @@ namespace la_mia_pizzeria_static.Controllers
 
         public IActionResult Menu()
         {
-            return View();
+            using(PizzaContext context = new PizzaContext())
+            {
+                List<Pizza> listaPizze = context.Pizze.ToList();
+
+                return View(listaPizze);
+            }
+           
+        }
+
+        public IActionResult DettaglioPizza(int id)
+        {
+            using (PizzaContext context = new PizzaContext())
+            {
+                Pizza current = context.Pizze.Where(pizza => pizza.ID == id).FirstOrDefault();
+
+                if(current == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return View(current);
+                } 
+            }
         }
 
         public IActionResult ChiSiamo()
